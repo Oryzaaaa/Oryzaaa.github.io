@@ -1,5 +1,6 @@
-#include "Main.h"
-void main ( void ) {
+#include "Main.h" //move 
+void main ( void )
+{
 freq=0; // 0=1khz (red), 1=10kHz(green beacon)
 SetDigitalOutput ( 10 , freq ) ; // turn to 1kHz (red beacon)
 ambient_level = 200; // esed in 'move'
@@ -52,8 +53,6 @@ state = 3 ;
 while ( state == 3 )
 {
 freq = 1; // 0=1khz (red), 1=10kHz(green beacon)
-
-Main 2
 SetDigitalOutput ( 10 , freq ) ; // turn to 1kHz (red beacon)
 Read_PD ( ) ;
 find_max ( ) ;
@@ -86,10 +85,11 @@ SetMotor ( 2 , -127 ) ;
 SetMotor ( 3 , 127 ) ;
 Wait ( 500 ) ;
 }
+} 
 }
-}
-#include "Main.h"
-void Read_PD ( void ) {
+#include "Main.h"//read_PD
+void Read_PD ( void ) 
+{
 SetDigitalOutput ( 11 , 1 ) ; // close shutter, clear film, and increment counter
 SetDigitalOutput ( 12 , 1 ) ; // initialize conter value to '0'
 SetDigitalOutput ( 12 , 0 ) ; // aloww counter to count
@@ -104,30 +104,81 @@ PD4 = expose_and_read ( ) ;
 PD5 = expose_and_read ( ) ;
 PD6 = expose_and_read ( ) ;
 PD7 = expose_and_read ( ) ;
-PD_sum=PD0+PD1+PD2+PD3+PD4+PD5+PD6+PD7;
+PD_sum=PD0+PD1+PD2+PD3+PD4+PD5+PD6+PD7; 
 }
 #include "Main.h"
-int expose_and_read ( void ) {
+int expose_and_read ( void ) 
+{
 int intensity;
 SetDigitalOutput ( 11 , 1 ) ; // close shuter, clear film, increment counter
 Wait ( 5 ) ; // Wait 5mS for things to settle
 SetDigitalOutput ( 11 , 0 ) ; // open shutter for exposure
 Wait ( expose_time ) ; // expose time = 3mS to 8mS (can be adjusted)
 intensity = GetAnalogInput ( 1 ) ; // get the IR intensity reading
-return intensity;
-  }
-#include "Main.h"
-int expose_and_read ( void ) {
-int intensity;
-SetDigitalOutput ( 11 , 1 ) ; // close shuter, clear film, increment counter
-Wait ( 5 ) ; // Wait 5mS for things to settle
-SetDigitalOutput ( 11 , 0 ) ; // open shutter for exposure
-Wait ( expose_time ) ; // expose time = 3mS to 8mS (can be adjusted)
-intensity = GetAnalogInput ( 1 ) ; // get the IR intensity reading
-return intensity;
+return intensity ; 
 }
 #include "Main.h"
-void move ( void ) {
+void find_max ( void ) 
+{
+max_val = PD0 ;
+max_no =0;
+if ( PD1 > max_val )
+{
+max_val = PD1;
+max_no =1;
+}
+if ( PD2 > max_val )
+{
+max_val = PD2;
+max_no =2;
+}
+if ( PD3 > max_val )
+{
+max_val = PD3;
+max_no =3;
+}
+if ( PD4 > max_val )
+{
+max_val = PD4;
+max_no =4;
+}
+if ( PD5 > max_val )
+{
+max_val = PD5;
+max_no =5;
+}
+if ( PD6 > max_val )
+{
+max_val = PD6;
+max_no =6;
+}
+if ( PD7 > max_val )
+{
+max_val = PD7 ;
+max_no =7;
+} 
+}
+#include "Main.h" //limit PWM 
+int limit_pwm ( int temp ) 
+{
+int limited;
+if ( temp > 127 )
+{
+limited =127;
+}
+else if ( temp < -127 )
+{
+limited = -127;
+}
+else
+{
+limited =temp;
+}
+return limited ; 
+}
+#include "Main.h"//move
+void move ( void ) 
+{
 int temp;
 int steer;
 int error;
@@ -152,102 +203,5 @@ steer=0; // no steering
 temp=limit_pwm(0+steer+speed);
 SetMotor ( 2 , temp ) ;
 temp=limit_pwm(0+steer-speed);
-SetMotor(3,temp);
-}
-#include "Main.h"
-void find_max ( void ) {
-max_val = PD0 ;
-max_no =0;
-if ( PD1 > max_val )
-{
-max_val = PD1;
-max_no =1;
-}
-if ( PD2 > max_val )
-{
-max_val = PD2;
-max_no =2;
-}
-if ( PD3 > max_val )
-{
-max_val = PD3;
-max_no =3;
-}
-if ( PD4 > max_val )
-{
-max_val = PD4;
-max_no =4;
-}
-if ( PD5 > max_val )
-{
-max_val = PD5;
-max_no =5;
-}
-if ( PD6 > max_val )
-{
-max_val = PD6;
-max_no =6;
-}
-if ( PD7 > max_val )
-{
-max_val = PD7 ;
-max_no =7;
-}
-}
-#include "Main.h"
-void find_max ( void ) {
-max_val = PD0 ;
-max_no =0;
-if ( PD1 > max_val )
-{
-max_val = PD1;
-max_no =1;
-}
-if ( PD2 > max_val )
-{
-max_val = PD2;
-max_no =2;
-}
-if ( PD3 > max_val )
-{
-max_val = PD3;
-max_no =3;
-}
-if ( PD4 > max_val )
-{
-max_val = PD4;
-max_no =4;
-}
-if ( PD5 > max_val )
-{
-max_val = PD5;
-max_no =5;
-}
-if ( PD6 > max_val )
-{
-max_val = PD6;
-max_no =6;
-}
-if ( PD7 > max_val )
-{
-max_val = PD7 ;
-max_no =7;
-}
-}
-#include "Main.h"
-int limit_pwm ( int temp ) {
-int limited;
-if ( temp > 127 )
-{
-limited =127;
-}
-else if ( temp < -127 )
-{
-limited = -127;
-}
-else
-{
-limited =temp;
-}
-return limited;
+SetMotor ( 3 , temp ) ; 
 }
