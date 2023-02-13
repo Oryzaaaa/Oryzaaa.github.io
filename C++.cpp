@@ -1,94 +1,94 @@
 #include "Main.h" //move 
-void main ( void )
+int main ( void )
 {
-freq=0; // 0=1khz (red), 1=10kHz(green beacon)
-SetDigitalOutput ( 10 , freq ) ; // turn to 1kHz (red beacon)
-ambient_level = 200; // esed in 'move'
-slow_level = 5000; // used in 'move'
-stop_level = 6000; // used in 'move'
-expose_time = 3; // used in expose_and_read
-steer_sensitivity = 20; // used in 'move'
-forward_speed = 70; // forward speed, used in 'move' 35
-slow_speed = 40; // slow speed, used in 'move' 25
-spin_speed = 45; // spin speed (for searching mode), used in 'move' 50
-state = 0;
-bumper = 1;
-distance = 0;
-while ( state == 0 )
-{
-bumper = GetDigitalInput ( 2 ) ;
-if ( bumper == 0 )
-{
-state = 1 ;
-}
-}
-while ( state == 1 )
-{
-Read_PD ( ) ;
-find_max ( ) ;
-move ( ) ;
-limit = GetDigitalInput ( 1 ) ;
-if ( limit == 0 )
-{
-SetMotor ( 2 , 0 ) ;
-SetMotor ( 3 , 0 ) ;
-state = 2 ;
-}
-}
-while ( state == 2 )
-{
-SetMotor ( 1 , 80 ) ;
-Wait ( 500 ) ;
-SetMotor ( 1 , -80 ) ;
-Wait ( 500 ) ;
-SetMotor ( 1 , 0 ) ;
-Wait ( 500 ) ;
-Read_PD ( ) ;
-find_max ( ) ;
-if ( PD_sum < 400 )
-{
-SetMotor ( 2 , -100 ) ;
-SetMotor ( 3 , 100 ) ;
-Wait ( 1000 ) ;
-state = 3 ;
-}
-}
-while ( state == 3 )
-{
-freq = 1; // 0=1khz (red), 1=10kHz(green beacon)
-SetDigitalOutput ( 10 , freq ) ; // turn to 1kHz (red beacon)
-Read_PD ( ) ;
-find_max ( ) ;
-move ( ) ;
-limit = GetDigitalInput ( 1 ) ;
-if ( limit == 0 )
-{
-SetMotor ( 2 , 0 ) ;
-SetMotor ( 3 , 0 ) ;
-state = 4 ;
-}
-}
-if ( state == 4 )
-{
-SetMotor ( 1 , 80 ) ;
-Wait ( 500 ) ;
-SetMotor ( 1 , 0 ) ;
-Wait ( 500 ) ;
-state = 5;
-}
-while ( state == 5 )
-{
-StartUltrasonic ( 4 , 5 ) ;
-distance = GetUltrasonic ( 4 , 5 ) ;
-SetMotor ( 2 , -127 ) ;
-SetMotor ( 3 , 127 ) ;
-if ( distance <= 20 )
-{
-SetMotor ( 2 , -127 ) ;
-SetMotor ( 3 , 127 ) ;
-Wait ( 500 ) ;
-}
-} 
+  int bumper, limit, distance; // Create integer variables `bumper`, `limit`, and `distance`
+  
+  int freq=0; // 0=1khz (red), 1=10kHz(green beacon)
+  SetDigitalOutput ( 10 , freq ) ; // turn to 1kHz (red beacon)
+  int ambient_level = 200; // esed in 'move'
+  int slow_level = 5000; // used in 'move'
+  int stop_level = 6000; // used in 'move'
+  int expose_time = 3; // used in expose_and_read
+  int steer_sensitivity = 20; // used in 'move'
+  int forward_speed = 70; // forward speed, used in 'move' 35
+  int slow_speed = 40; // slow speed, used in 'move' 25
+  int spin_speed = 45; // spin speed (for searching mode), used in 'move' 50
+  int state = 0;
+  while ( state == 0 )
+  {
+    bumper = GetDigitalInput ( 2 ) ;
+    if ( bumper == 0 )
+    {
+      state = 1 ;
+    }
+  }
+  while ( state == 1 )
+  {
+    Read_PD ( ) ;
+    find_max ( ) ;
+    move ( ) ;
+    limit = GetDigitalInput ( 1 ) ;
+    if ( limit == 0 )
+    {
+      SetMotor ( 2 , 0 ) ;
+      SetMotor ( 3 , 0 ) ;
+      state = 2 ;
+    }
+  }
+  while ( state == 2 )
+  {
+    SetMotor ( 1 , 80 ) ;
+    Wait ( 500 ) ;
+    SetMotor ( 1 , -80 ) ;
+    Wait ( 500 ) ;
+    SetMotor ( 1 , 0 ) ;
+    Wait ( 500 ) ;
+    Read_PD ( ) ;
+    find_max ( ) ;
+    if ( PD_sum < 400 )
+    {
+      SetMotor ( 2 , -100 ) ;
+      SetMotor ( 3 , 100 ) ;
+      Wait ( 1000 ) ;
+      state = 3 ;
+    }
+  }
+  while ( state == 3 )
+  {
+    freq = 1; // 0=1khz (red), 1=10kHz(green beacon)
+    SetDigitalOutput ( 10 , freq ) ; // turn to 1kHz (red beacon)
+    Read_PD ( ) ;
+    find_max ( ) ;
+    move ( ) ;
+    limit = GetDigitalInput ( 1 ) ;
+    if ( limit == 0 )
+    {
+      SetMotor ( 2 , 0 ) ;
+      SetMotor ( 3 , 0 ) ;
+      state = 4 ;
+    }
+  }
+  if ( state == 4 )
+  {
+    SetMotor ( 1 , 80 ) ;
+    Wait ( 500 ) ;
+    SetMotor ( 1 , 0 ) ;
+    Wait ( 500 ) ;
+    state = 5;
+  }
+  while ( state == 5 )
+  {
+    StartUltrasonic ( 4 , 5 ) ;
+    distance = GetUltrasonic ( 4 , 5 ) ;
+    SetMotor ( 2 , -127 ) ;
+    SetMotor ( 3 , 127 ) ;
+    if ( distance <= 20 )
+    {
+      SetMotor ( 2 , -127 ) ;
+      SetMotor ( 3 , 127 ) ;
+      Wait ( 500 ) ;
+    }
+  } 
 }
 #include "Main.h"//read_PD
 void Read_PD ( void ) 
