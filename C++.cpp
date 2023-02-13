@@ -5,7 +5,7 @@ int main ( void )
   
   int freq=0; // 0=1khz (red), 1=10kHz(green beacon)
   SetDigitalOutput ( 10 , freq ) ; // turn to 1kHz (red beacon)
-  int ambient_level = 200; // esed in 'move'
+  int ambient_level = 200; // used in 'move'
   int slow_level = 5000; // used in 'move'
   int stop_level = 6000; // used in 'move'
   int expose_time = 3; // used in expose_and_read
