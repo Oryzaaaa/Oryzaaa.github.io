@@ -92,7 +92,7 @@ void Read_PD ( void )
 {
 SetDigitalOutput ( 11 , 1 ) ; // close shutter, clear film, and increment counter
 SetDigitalOutput ( 12 , 1 ) ; // initialize conter value to '0'
-SetDigitalOutput ( 12 , 0 ) ; // aloww counter to count
+SetDigitalOutput ( 12 , 0 ) ; // allow counter to count
 Wait ( 5 ) ; // 5mS wait for things settling down
 SetDigitalOutput ( 11 , 0 ) ; // open shutter and expose film
 Wait ( expose_time ) ; // exposer time = 3mS to 8mS
@@ -110,7 +110,7 @@ PD_sum=PD0+PD1+PD2+PD3+PD4+PD5+PD6+PD7;
 int expose_and_read ( void ) 
 {
 int intensity;
-SetDigitalOutput ( 11 , 1 ) ; // close shuter, clear film, increment counter
+SetDigitalOutput ( 11 , 1 ) ; // close shutter, clear film, increment counter
 Wait ( 5 ) ; // Wait 5mS for things to settle
 SetDigitalOutput ( 11 , 0 ) ; // open shutter for exposure
 Wait ( expose_time ) ; // expose time = 3mS to 8mS (can be adjusted)
@@ -191,11 +191,11 @@ if ( PD_sum<ambient_level ) // If <background noise level => search mode.
 speed=0; // search mode => no forward motion
 steer=-spin_speed; // search mode => spin
 }
-if ( PD_sum>slow_level ) // Beacon is near!
+if ( PD_sum>slow_level ) // Beacon is near
 {
 speed=slow_speed; // Slow down
 }
-if ( PD_sum>stop_level ) // Found the beacon!
+if ( PD_sum>stop_level ) // Found the beacon
 {
 speed=0; // Stop
 steer=0; // no steering
