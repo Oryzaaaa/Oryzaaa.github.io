@@ -11,6 +11,7 @@ steer_sensitivity = 20; // used in 'move'
 forward_speed = 70; // forward speed, used in 'move' 35
 slow_speed = 40; // slow speed, used in 'move' 25
 spin_speed = 45; // spin speed (for searching mode), used in 'move' 50
+state = 0;
 while ( state == 0 )
 {
 bumper = GetDigitalInput ( 2 ) ;
